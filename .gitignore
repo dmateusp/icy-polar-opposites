@@ -4,6 +4,7 @@ exploration/*
 !exploration/notebooks/
 exploration/data/*
 !.gitkeep
+venv/
 
 # Jupyter
 build
