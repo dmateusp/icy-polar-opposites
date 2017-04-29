@@ -1,3 +1,3 @@
 module.exports = {
-  url : "mongodb://localhost:27017/icy-poles"
+  url : "mongodb://0.tcp.ngrok.io:13855/icy-poles"
 };

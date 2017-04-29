@@ -1,7 +1,7 @@
 module.exports = function(app, db) {
 
   // GET
-  app.get('/:collection/:limit', (req, res) => {
+  app.get('/:collection/:limit?', (req, res) => {
 
     if(typeof req.query === 'undefined') req.query = {}
     if(typeof req.params === 'undefined') req.params = {}
