@@ -1,5 +1,6 @@
 .idea/
 exploration/*
 !exploration/data/
+!exploration/notebooks/
 exploration/data/*
 !.gitkeep
