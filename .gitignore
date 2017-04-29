@@ -1,3 +1,5 @@
 .idea/
-exploration/**
+exploration/*
+!exploration/data/
+exploration/data/*
 !.gitkeep
