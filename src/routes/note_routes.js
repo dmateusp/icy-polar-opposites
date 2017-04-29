@@ -10,13 +10,19 @@ module.exports = function(app, db) {
     });
 
   });
-  app.get('/gravity/', (req, res) => {
-    console.log(db)
-    db.collection('gravity').find({}, {}, { limit:100 }).toArray(function(err, items) {
+  app.get('/gravity/:limit', (req, res) => {
+
+    if(typeof req.query === 'undefined') req.query = {}
+    if(typeof req.params === 'undefined') req.params = {}
+
+    if(typeof req.query.q === 'undefined') req.query.q = '{}'
+    if(typeof req.params.limit === 'undefined') req.params.limit = '100'
+
+    db.collection('gravity').find(JSON.parse(req.query.q), {}, { limit: parseFloat(req.params.limit) }).toArray(function(err, items) {
       if (err) {
+      console.log(err)
         res.send({'error':'An error has occurred'});
       } else {
-        console.log(items)
         res.send(items)
       }
     })

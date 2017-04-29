@@ -12,8 +12,6 @@ const port = 8000
 MongoClient.connect(db.url, (err, database) => {
   if (err) {console.log(err);  return console.log("Error DB not connecting")}
 
-  console.log(database)
-
   require('./routes')(app, database)
 
   app.listen(port, () => {
