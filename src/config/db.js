@@ -1,3 +1,3 @@
 module.exports = {
-  url : "mongodb://localhost:27017/db"
+  url : "mongodb://localhost:27017/icy-poles"
 };

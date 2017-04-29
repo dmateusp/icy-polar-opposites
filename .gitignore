@@ -1,3 +1,4 @@
+# project
 .idea/
 exploration/*
 !exploration/data/
@@ -5,6 +6,7 @@ exploration/*
 exploration/data/*
 venv/
 db/*
+project-test.pem
 
 # Jupyter
 build
