@@ -1,16 +1,7 @@
 module.exports = function(app, db) {
-  app.get('/ice/', (req, res) => {
-    console.log(db)
-    db.collection['ice'].find((err, items) => {
-      if (err) {
-        res.send({'error':'An error has occurred'})
-      } else {
-        res.send(items)
-      }
-    });
 
-  });
-  app.get('/gravity/:limit', (req, res) => {
+  // GET
+  app.get('/:collection/:limit', (req, res) => {
 
     if(typeof req.query === 'undefined') req.query = {}
     if(typeof req.params === 'undefined') req.params = {}
@@ -18,7 +9,7 @@ module.exports = function(app, db) {
     if(typeof req.query.q === 'undefined') req.query.q = '{}'
     if(typeof req.params.limit === 'undefined') req.params.limit = '100'
 
-    db.collection('gravity').find(JSON.parse(req.query.q), {}, { limit: parseFloat(req.params.limit) }).toArray(function(err, items) {
+    db.collection(req.params.collection).find(JSON.parse(req.query.q), {}, { limit: parseFloat(req.params.limit) }).toArray(function(err, items) {
       if (err) {
       console.log(err)
         res.send({'error':'An error has occurred'});
@@ -27,5 +18,5 @@ module.exports = function(app, db) {
       }
     })
 
-  });
-};
+  })
+}

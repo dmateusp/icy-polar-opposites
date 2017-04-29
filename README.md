@@ -23,6 +23,20 @@ Use NASA data to show changes in ice, gravity (incluenced by gravity) and compar
 
 You can look at our data pre-processing and exploring under `/exploration/notebooks`
 
+## The api
+
+   * `GET    /gravity/:limit`
+
+Returns gravity data satisfying query in `q`. Example: `/gravity/20?q={"LONG": 42.3333}` to return all gravity information at the longitude 42.3333 (please refer to `MongoDB` query documentation for more)
+
+
+
+   * `GET    /ice/:limit`
+
+Returns ice data satisfying query in `q`. Example: `/ice/100?q={"thickness": {"$gt":20}}` to return all ice information of thickness greater than 20
+
+NOTE: There is a limit of 100 by default and no pagination for the data queried.
+
 ### Running your own server, for testing or to contribute :)
 To start the web server:
 * clone the repository
@@ -31,6 +45,14 @@ To start the web server:
 * install dependencies `npm install`
 * run the server `npm run dev`
 * The server is running on port 8000
+
+### Adding data
+
+To add data we first explore the original data under `/exploration` using `Jupyter`. Then the data is processed, turned to JSON which is then added to the DB using: `mongoimport`
+
+Then the API needs to be extended!
+
+(Example: `mongoimport --db icy-poles -c ice --file IRMCR2_south.json --jsonArray`)
 
 ## Our sources for data (provided by NASA)
 
