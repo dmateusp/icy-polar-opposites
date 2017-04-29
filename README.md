@@ -19,6 +19,19 @@ Use NASA data to show changes in ice, gravity (incluenced by gravity) and compar
 
 `TODO`
 
+## Getting started
+
+You can look at our data pre-processing and exploring under `/exploration/notebooks`
+
+### Running your own server, for testing or to contribute :)
+To start the web server:
+* clone the repository
+* open a terminal at the root of the project
+* start MongoDB by issuing: `mongod --dbpath ./db`
+* install dependencies `npm install`
+* run the server `npm run dev`
+* The server is running on port 8000
+
 ## Our sources for data (provided by NASA)
 
 ### Airborne Topographic Mapper:
