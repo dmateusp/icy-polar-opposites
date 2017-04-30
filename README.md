@@ -15,28 +15,30 @@ Use NASA data to show changes in ice, gravity (incluenced by gravity) and compar
 * Visualisation: `NodeJS + WebGL`
 * Database: `MongoDB`
 
-## Format of the data
-
-`TODO`
-
 ## Getting started
 
 You can look at our data pre-processing and exploring under `/exploration/notebooks`
 
+## Structure of the website
+
+* /presentation: the presentation with interactive data visualization
+* /globe: 3D globe based on WebGL using Cesium.js visualizing sea ice data from NSIDC.org (National Snow and Ice Data Center)
+* /api: See the api part below
+
 ## The api
 
-   * `GET    /gravity/:limit`
+   * `GET    /api/gravity/:limit`
 
 Returns gravity data satisfying query in `q`. Example: `/gravity/20?q={"LONG": 42.3333}` to return all gravity information at the longitude 42.3333 (please refer to `MongoDB` query documentation for more)
 
 
 
-   * `GET    /ice/:limit`
+   * `GET    /api/ice/:limit`
 
 Returns ice data satisfying query in `q`. Example: `/ice/100?q={"thickness": {"$gt":20}}` to return all ice information of thickness greater than 20
 
 
-   * `GET    /ice_nsdic:limit`
+   * `GET    /api/ice_nsdic:limit`
 
 Returns ice data satisfying query in `q` from the National Snow and Ice Data Center. Example: `/ice_nsdic/100?q={"area": {"$gt":11}, "extent": {"$lt": 16}}` to return all ice information for area greater than 11 and extent lower than 16
 
