@@ -35,6 +35,11 @@ Returns gravity data satisfying query in `q`. Example: `/gravity/20?q={"LONG": 4
 
 Returns ice data satisfying query in `q`. Example: `/ice/100?q={"thickness": {"$gt":20}}` to return all ice information of thickness greater than 20
 
+
+   * `GET    /ice_nsdic:limit`
+
+Returns ice data satisfying query in `q` from the National Snow and Ice Data Center. Example: `/ice_nsdic/100?q={"area": {"$gt":11}, "extent": {"$lt": 16}}` to return all ice information for area greater than 11 and extent lower than 16
+
 NOTE: There is a limit of 100 by default and no pagination for the data queried.
 
 ### Running your own server, for testing or to contribute :)
@@ -96,3 +101,8 @@ Measures the height of vegetation in the polar regions.
  AIRGrav is  an airborne gravimeter (an instrument for measuring the difference in the force of gravity from one place to another.)
 
 * http://nsidc.org/data/IGGRV1B
+
+### Another Ice data source (National Snow and Ice Data Center)
+Measure area and extent of ice 
+
+* ftp://sidads.colorado.edu/DATASETS/NOAA/G02135/
