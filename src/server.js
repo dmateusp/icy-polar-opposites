@@ -7,6 +7,8 @@ const db             = require('./config/db')
 
 const app            = express()
 
+app.use('/static', express.static('public'))
+
 if (typeof process.env.PORT === 'undefined') process.env.PORT = '8000'
 
 MongoClient.connect(db.url, (err, database) => {
@@ -16,5 +18,5 @@ MongoClient.connect(db.url, (err, database) => {
 
   app.listen(process.env.PORT, () => {
     console.log('We are live on ' + process.env.PORT)
-  });
+  })
 })

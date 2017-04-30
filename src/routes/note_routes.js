@@ -1,5 +1,12 @@
-module.exports = function(app, db) {
+const path = require('path')
 
+module.exports = function(app, db) {
+  // GET INDEX
+  app.get('/', (req, res) => {
+    res.status(200)
+    res.header("Content-Type", "text/html")
+    res.sendFile(path.join(__dirname,'../../public/index.html'))
+  })
   // GET
   app.get('/:collection/:limit?', (req, res) => {
 
