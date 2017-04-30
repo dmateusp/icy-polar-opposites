@@ -7,7 +7,8 @@ const db             = require('./config/db')
 
 const app            = express()
 
-app.use('/static', express.static('public'))
+app.use(express.static('public'))
+app.use(express.static('public/presentation'))
 
 if (typeof process.env.PORT === 'undefined') process.env.PORT = '8000'
 
