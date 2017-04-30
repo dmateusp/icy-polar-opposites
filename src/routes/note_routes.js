@@ -3,7 +3,7 @@ const path = require('path')
 module.exports = function(app, db) {
 
   // GET
-  app.get('/:collection/:limit?', (req, res) => {
+  app.get('/api/:collection/:limit?', (req, res) => {
 
     if(typeof req.query === 'undefined') req.query = {}
     if(typeof req.params === 'undefined') req.params = {}
