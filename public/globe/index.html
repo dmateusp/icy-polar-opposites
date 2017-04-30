@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Use correct character set. -->
+  <meta charset="utf-8">
+  <!-- Tell IE to use the latest, best version. -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <title>Icy Polar Opposites</title>
+  <script src="../cesium/cesium.js"></script>
+  <style>
+      @import url(../cesium/Widgets/widgets.css);
+      html, body, #cesiumContainer {
+          width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+      }
+      #northContainer, #southContainer {
+        width: 50%; height: 100%; margin: 0; padding: 0; overflow: hidden;
+      }
+      #northContainer {
+        float:left;
+      }
+      #southContainer {
+        float: right;
+      }
+  </style>
+</head>
+<body>
+  <div id="cesiumContainer">
+  <div id="northContainer"></div>
+  <div id="southContainer"></div>
+  <div id="cesiumContainer">
+  <script>
+    /* insert your Bing Map API key here */
+    // Cesium.BingMapsApi.defaultKey = '';
+
+    /* camera parameters */
+    const cameraHeight = 15000000;
+    const northCenter = Cesium.Cartesian3.fromDegrees(0, 90, cameraHeight);
+    const southCenter = Cesium.Cartesian3.fromDegrees(-90, -90, cameraHeight);
+    const cameraOrientation = {
+        heading: 0.0,
+        pitch: -Cesium.Math.PI_OVER_TWO,
+        roll: 0.0
+      };
+
+    /* two cesium viewers for north pole and south pole respectively */
+    const northView = new Cesium.Viewer('northContainer', {fullscreenButton: false,
+      baseLayerPicker: false, geocoder: false, homeButton: false, sceneModePicker: false, navigationHelpButton: false
+    });
+    const southView = new Cesium.Viewer('southContainer', {
+      timeline: false, animation: false, 
+      baseLayerPicker: false, geocoder: false, homeButton: false, sceneModePicker: false, navigationHelpButton: false});
+
+    /* black marble texture */
+    // const blackMarble = {
+    //     url: 'https://cesiumjs.org/blackmarble',
+    //     flipXY: true
+    //   };
+    // const northLayer = northView.imageryLayers.addImageryProvider(Cesium.createTileMapServiceImageryProvider(blackMarble));
+    // const southLayer = southView.imageryLayers.addImageryProvider(Cesium.createTileMapServiceImageryProvider(blackMarble));
+
+    const startYear = 1979;
+    const endYear = 2017;
+    const endMonth = 3;
+    
+    const missingYears = {
+      N: [{1988: 1}, {1997: 1}, {2005: 1}]
+    }
+
+    var dateDisplayed = {
+      year: startYear,
+      month: 0
+    };
+
+    /* settings for appearance of the polygons of ice */
+    const show = {
+      stroke: Cesium.Color.GREY,
+      fill: Cesium.Color.WHITE,
+      strokeWidth: 3,
+      markerSymbol: '?'
+    };
+
+    const hidden = {
+      stroke: Cesium.Color.TRANSPARENT,
+      fill: Cesium.Color.TRANSPARENT,
+      strokeWidth: 0,
+      markerSymbol: ''
+    };
+
+    /* timeline settings */
+    const startDate = Cesium.JulianDate.fromDate(new Date(startYear, 0, 1));
+    const endDate = Cesium.JulianDate.fromDate(new Date(endYear, endMonth-1, 1));
+
+    function onTickCallBack() {
+      var currentTime = Cesium.JulianDate.toDate(northView.clock.currentTime);
+      var currentYear = currentTime.getFullYear();
+      var currentMonth = currentTime.getMonth() + 1;
+
+      // if (!(currentYear != dateDisplayed.year || currentMonth != dateDisplayed.month)) {
+      //   return;
+      // }
+
+      if (currentYear == dateDisplayed.year) {
+        return;
+      }
+
+      if (currentYear != dateDisplayed.year) {
+        dateDisplayed.year = currentYear;
+      }
+      if (currentMonth != dateDisplayed.month) {
+        dateDisplayed.month = currentMonth;
+      }
+
+      var monthString = currentMonth < 10 ? '0' + currentMonth.toString() : currentMonth.toString();
+
+      try {
+        console.log('current year: ' + currentYear.toString());
+        console.log('current month: ' + monthString);
+        // handleMissingData();
+
+        var newNorthData = Cesium.GeoJsonDataSource.load('../data/extent_N_' + currentYear.toString() + '01' + '_polygon_v2.1.geojson', show).then(function(newNorthData) {
+          northView.dataSources.add(newNorthData);
+          setTimeout(function(){northView.dataSources.remove(northView.dataSources.get(0))}, 500);
+        });
+        var newSouthData = Cesium.GeoJsonDataSource.load('../data/extent_S_' + currentYear.toString() + '01' + '_polygon_v2.1.geojson', show).then(function(newSouthData) {
+          southView.dataSources.add(newSouthData);
+          setTimeout(function(){southView.dataSources.remove(southView.dataSources.get(0))}, 500);
+        });
+      } catch(err) {
+        console.error(err);
+      } 
+    }
+
+    /* a function to set the timeline */
+    function setTimeline(view) {
+      view.clock.currentTime = startDate.clone();
+      view.clock.startTime = startDate.clone();
+      view.clock.endTime = endDate.clone();
+      view.clock.clockRange = Cesium.ClockRange.LOOP_STOP;
+      view.clock.multiplier = 10000000;
+      view.timeline.zoomTo(startDate, endDate);
+
+      view.clock.onTick.addEventListener(onTickCallBack);
+    }
+
+    setTimeline(northView);
+
+    /* loading data source */
+    const n197901 = Cesium.GeoJsonDataSource.load('../data/extent_N_197901_polygon_v2.1.geojson', show);
+    const s197901 = Cesium.GeoJsonDataSource.load('../data/extent_S_197901_polygon_v2.1.geojson', show);
+
+    /* adding data source */
+    northView.dataSources.add(n197901);
+    southView.dataSources.add(s197901);
+    // northView.dataSources.add(n201701);
+
+    /* setting up the cameras for the two viewer */
+    northView.camera.setView({
+      destination: northCenter,
+      orientation: cameraOrientation
+    });
+
+    southView.camera.flyTo({
+      destination: southCenter,
+      orientation: cameraOrientation
+    })
+  </script>
+</body>
+</html>
