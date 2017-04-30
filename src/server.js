@@ -7,7 +7,7 @@ const db             = require('./config/db')
 
 const app            = express()
 
-const port = 8000
+const port = 80
 
 MongoClient.connect(db.url, (err, database) => {
   if (err) {console.log(err);  return console.log("Error DB not connecting")}
