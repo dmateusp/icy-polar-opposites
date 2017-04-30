@@ -21,8 +21,8 @@ You can look at our data pre-processing and exploring under `/exploration/notebo
 
 ## Structure of the website
 
-* /presentation: 
-* /globe: 
+* /presentation: the presentation with interactive data visualization
+* /globe: 3D globe based on WebGL using Cesium.js visualizing sea ice data from NSIDC.org (National Snow and Ice Data Center)
 * /api: See the api part below
 
 ## The api
