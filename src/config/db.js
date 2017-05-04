@@ -1,4 +1,4 @@
 module.exports = {
-  url : "mongodb://0.tcp.ngrok.io:13033/icy-poles"
+  url : "mongodb://anybear:public@ds131151.mlab.com:31151/heroku_5xpnz64d"
   // url : "mongodb://localhost:27017/icy-poles" // For local DB
 };
