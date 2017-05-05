@@ -9,6 +9,8 @@ Design a data analysis and/or visualization tool to show the spatial and tempora
 
 Use NASA data to show changes in ice, gravity (incluenced by gravity) and compare the poles over time!
 
+The app is live here: https://icypolaropposites.herokuapp.com/
+
 ## The tech
 
 * Data exploration: `Jupyter + Python`
@@ -17,7 +19,7 @@ Use NASA data to show changes in ice, gravity (incluenced by gravity) and compar
 
 ## Getting started
 
-You can look at our data pre-processing and exploring under `/exploration/notebooks`
+You can look at our data pre-processing and exploring [here](https://github.com/dmateusp/icy-polar-opposites/tree/master/exploration/notebooks)
 
 ## Structure of the website
 
@@ -42,7 +44,12 @@ Returns ice data satisfying query in `q`. Example: `/ice/100?q={"thickness": {"$
 
 Returns ice data satisfying query in `q` from the National Snow and Ice Data Center. Example: `/ice_nsdic/100?q={"area": {"$gt":11}, "extent": {"$lt": 16}}` to return all ice information for area greater than 11 and extent lower than 16
 
-NOTE: There is a limit of 100 by default and no pagination for the data queried.
+NOTE:
+1. There is a limit of 100 by default and no pagination for the data queried.
+
+2. For development purpose you can use the following credential to gain read access to our database
+  * user name: anybear
+  * key: public
 
 ### Running your own server, for testing or to contribute :)
 To start the web server:
